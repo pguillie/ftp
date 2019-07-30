@@ -6,9 +6,14 @@
 /*   By: pguillie <pguillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/24 19:32:32 by pguillie          #+#    #+#             */
-/*   Updated: 2019/05/27 08:46:34 by pguillie         ###   ########.fr       */
+/*   Updated: 2019/07/30 08:19:52 by pguillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include <limits.h>
+#ifndef OPEN_MAX
+# define OPEN_MAX 256
+#endif
 
 #include "libft.h"
 
@@ -50,21 +55,22 @@ static int read_line_return(char **line, char **s, char *nl)
 
 int read_line(int fd, char **line)
 {
-	static char *s;
+	static char *s[OPEN_MAX];
 	char buf[1024];
 	char *nl;
 	ssize_t c;
 
-	if (!line || fd < 0)
+	if (!line || fd < 0 || !(fd < OPEN_MAX))
 		return (-1);
 	c = sizeof(buf);
-	while ((!s || (nl = ft_strchr(s, '\n')) == NULL) && c == sizeof(buf)) {
+	while ((!s[fd] || (nl = ft_strchr(s[fd], '\n')) == NULL)
+		&& c == sizeof(buf)) {
 		ft_memset(buf, 0, sizeof(buf));
 		if ((c = read(fd, buf, sizeof(buf))) > 0)
-			if (ft_strnapp(&s, buf, c) == NULL)
+			if (ft_strnapp(&s[fd], buf, c) == NULL)
 				return (-1);
 	}
 	if (c < 0)
 		return (-1);
-	return (read_line_return(line, &s, nl));
+	return (read_line_return(line, &s[fd], nl));
 }

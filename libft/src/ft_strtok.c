@@ -1,33 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memmove.c                                       :+:      :+:    :+:   */
+/*   ft_strtok.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pguillie <pguillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/05/27 08:46:11 by pguillie          #+#    #+#             */
-/*   Updated: 2019/07/30 18:40:14 by pguillie         ###   ########.fr       */
+/*   Created: 2019/07/29 07:27:39 by pguillie          #+#    #+#             */
+/*   Updated: 2019/07/30 16:49:59 by pguillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void *ft_memmove(void *dest, const void *src, size_t n)
+char *ft_strtok(char *str, const char *delim)
 {
-	unsigned char *d, *s;
-	size_t i;
+	static char *start;
+	char *token;
 
-	d = (unsigned char *)dest;
-	s = (unsigned char *)src;
-	if (dest < src) {
-		i = 0;
-		while (i < n) {
-			d[i] = s[i];
-			i++;
-		}
-	} else {
-		while (n--)
-			d[n] = s[n];
-	}
-	return (dest);
+	if (str != NULL)
+		start = str;
+	while (*start && ft_strchr(delim, *start))
+		start++;
+	if (*start == '\0')
+		return (NULL);
+	token = start;
+	while (*start && !ft_strchr(delim, *start))
+		start++;
+	*start++ = '\0';
+	return (token);
 }
