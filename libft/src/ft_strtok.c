@@ -6,7 +6,7 @@
 /*   By: pguillie <pguillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/29 07:27:39 by pguillie          #+#    #+#             */
-/*   Updated: 2019/07/30 16:49:59 by pguillie         ###   ########.fr       */
+/*   Updated: 2019/08/04 12:45:08 by pguillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ char *ft_strtok(char *str, const char *delim)
 	token = start;
 	while (*start && !ft_strchr(delim, *start))
 		start++;
-	*start++ = '\0';
+	if (*start != '\0')
+		*start++ = '\0';
 	return (token);
 }

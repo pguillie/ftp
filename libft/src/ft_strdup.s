@@ -6,7 +6,7 @@
 ;    By: pguillie <pguillie@student.42.fr>          +#+  +:+       +#+         ;
 ;                                                 +#+#+#+#+#+   +#+            ;
 ;    Created: 2019/02/21 18:48:53 by pguillie          #+#    #+#              ;
-;    Updated: 2019/07/30 14:24:41 by pguillie         ###   ########.fr        ;
+;    Updated: 2019/08/03 11:07:02 by pguillie         ###   ########.fr        ;
 ;                                                                              ;
 ;******************************************************************************;
 
@@ -22,8 +22,7 @@ ft_strdup:
 	call	ft_strlen
 	mov	rdi, rax
 	push	rdi
-;	call	malloc WRT ..plt
-	call	malloc
+	call	malloc WRT ..plt
 	test	rax, rax
 	je	return
 	pop	rdx

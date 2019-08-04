@@ -6,20 +6,20 @@
 #    By: pguillie <pguillie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/22 04:54:10 by pguillie          #+#    #+#              #
-#    Updated: 2019/07/30 18:47:27 by pguillie         ###   ########.fr        #
+#    Updated: 2019/08/02 05:14:23 by pguillie         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
-NAME	= libft.a
-CC	= gcc
-AS	= nasm
-AR	= ar
+NAME	:= libft.a
+CC	:= gcc
+AS	:= nasm
+AR	:= ar
 
 CFLAGS	= -Wall -Werror -Wextra -I$(incdir)
 ASFLAGS	= -f$(arch)
 ARFLAGS	= cr
 
-os != shell uname
+os != uname
 ifeq ($(os), Linux)
 	arch := elf64
 	ARFLAGS += -U
@@ -28,8 +28,8 @@ else
 	ASFLAGS += --prefix _
 endif
 
-incdir = ./include/
-srcdir = ./src/
+incdir := ./include/
+srcdir := ./src/
 
 hdr = libft.h libfts.h ft_ctype.h
 
