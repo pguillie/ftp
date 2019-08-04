@@ -6,7 +6,7 @@
 /*   By: pguillie <pguillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/26 07:40:07 by pguillie          #+#    #+#             */
-/*   Updated: 2019/06/23 14:52:24 by pguillie         ###   ########.fr       */
+/*   Updated: 2019/07/07 06:56:45 by pguillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,16 +32,29 @@
 # define EOL "\r\n"
 # define EOL_LENGTH (2)
 
+////// old
 struct connected_socket {
 	struct sockaddr_in addr;
 	int sock;
 };
-
 struct ftp_client {
 	struct passwd *user;
 	struct connected_socket control;
 	struct connected_socket data;
 	int binary;
+};
+//////////
+
+struct ftp_control_connection {
+       struct passwd *user;
+       struct sockaddr_in addr;
+       int sock;
+};
+
+struct ftp_data_connection {
+       struct sockaddr_in addr;
+       int sock;
+       int type;
 };
 
 enum e_dtp_type {
