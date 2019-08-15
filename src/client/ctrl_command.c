@@ -1,24 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   user_interface.h                                   :+:      :+:    :+:   */
+/*   ctrl_command.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pguillie <pguillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/29 05:34:46 by pguillie          #+#    #+#             */
-/*   Updated: 2019/08/15 09:18:29 by pguillie         ###   ########.fr       */
+/*   Created: 2019/08/15 08:29:39 by pguillie          #+#    #+#             */
+/*   Updated: 2019/08/15 12:08:47 by pguillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef USER_INTERFACE_H
-# define USER_INTERFACE_H
+#include "client/protocol_interpreter.h"
 
-# include <unistd.h>
+#include <stdio.h>//
+int ctrl_command(int control, const char *cmd, char *args)
+{
+	char *reply;
 
-# include "../libft/include/libft.h"
-
-int ui_input(char **line);
-int ui_output(const char *msg);
-int ui_reply(const char *reply, const char *success);
-
-#endif /* USER_INTERFACE_H */
+	if (send_command(control, cmd, args) != 0)
+		fprintf(stderr, "ERR ctrl_command 1\n");
+	if (recv_reply(control, &reply) < 0)
+		fprintf(stderr, "ERR ctrl_command 2\n");
+	ui_reply(reply, "2");
+	free(reply);
+	return 0;
+}

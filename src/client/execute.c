@@ -6,7 +6,7 @@
 /*   By: pguillie <pguillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/31 12:35:56 by pguillie          #+#    #+#             */
-/*   Updated: 2019/08/04 10:45:24 by pguillie         ###   ########.fr       */
+/*   Updated: 2019/08/15 12:05:07 by pguillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,27 +15,30 @@
 
 struct {
 	const char *name;
-	int (*f)(int, char *);
+	int (*f)(int, const char *, char *);
+	const char *cmd;
 } ftp_command[] = {
-	{"user", &user_name},
-	/* {"cd", &change_working_directory}, */
-	{"quit", &logout},
-	/* {"type", &representation_type}, */
-	/* {"get", &retrieve}, */
-	/* {"put", &store}, */
-	{"pwd", &print_working_directory},
-	/* {"ls", &list} */
+	{"user", &ctrl_command, "USER"},
+	{"cd", &ctrl_command, "CWD"},
+	{"quit", &ctrl_command, "QUIT"},
+	{"type", &ctrl_command, "TYPE"},
+	/* {"get", &data_command, "RETR"}, */
+	/* {"put", &data_command, "STOR"}, */
+	{"pwd", &ctrl_command, "PWD"},
+	/* {"ls", &data_command, "LIST"}, */
+	{"syst", &ctrl_command, "SYST"}
 };
 
-int execute(int control_sock, const char *cmd, char *args)
+int execute(int control, const char *cmd, char *args)
 {
 	size_t i;
 
 	i = sizeof(ftp_command) / sizeof(ftp_command[0]);
-	while (i--) {
-		if (strcmp(ftp_command[i].name, cmd) == 0)
-			return (ftp_command[i].f(control_sock, args));
+	while (strcmp(ftp_command[--i].name, cmd)) {
+		if (i == 0) {
+			ui_output("Invalid command.");
+			return 1;
+		}
 	}
-	ui_output("Invalid command.");
-	return (1);
+	return (ftp_command[i].f(control, ftp_command[i].cmd, args));
 }

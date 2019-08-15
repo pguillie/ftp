@@ -6,7 +6,7 @@
 #    By: pguillie <pguillie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/22 18:46:54 by pguillie          #+#    #+#              #
-#    Updated: 2019/08/04 10:47:57 by pguillie         ###   ########.fr        #
+#    Updated: 2019/08/15 11:27:47 by pguillie         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -74,13 +74,11 @@ client_src = $(addprefix client/,		\
 	main.c					\
 	client.c				\
 	protocol_interpreter.c			\
+	user_interface.c			\
 	execute.c				\
-	user_name.c				\
-	logout.c				\
-	print_working_directory.c		\
+	ctrl_command.c				\
 	send_command.c				\
 	recv_reply.c				\
-	user_interface.c			\
 )
 
 client_obj = $(addprefix $(srcdir), $(client_src:%.c=%.o))
