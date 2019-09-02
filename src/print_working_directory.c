@@ -1,29 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   retrieve.c                                         :+:      :+:    :+:   */
+/*   print_working_directory.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pguillie <pguillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/05/25 11:58:36 by pguillie          #+#    #+#             */
-/*   Updated: 2019/06/05 21:26:06 by pguillie         ###   ########.fr       */
+/*   Created: 2019/08/02 04:31:13 by pguillie          #+#    #+#             */
+/*   Updated: 2019/08/04 12:29:08 by pguillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "server/protocol_interpreter.h"
+#include "protocol_interpreter.h"
 
-struct ftp_client client;
-
-int retrieve(char *file)
+int print_working_directory(int control, char *args __attribute__((unused)))
 {
-	if (!client.user) {
-		send_reply(client.control.sock, FTP_AUTH_ERR);
-		return (1);
-	}
-	if (access(file, R_OK) != 0) {
-		send_reply(client.control.sock, FTP_FILE_ERR);
-		return (1);
-	}
-	send_reply(client.control.sock, FTP_FILE_RETR_OPEN);
-	return (data_transfer_process(DTP_RETR, file));
+	char *reply;
+
+	send_command(control, "PWD", NULL);
+	recv_reply(control, &reply); //secu
+	ui_reply(reply);
+	free(reply);
+	return (0);
 }

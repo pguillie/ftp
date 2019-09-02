@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "client/protocol_interpreter.h"
-#include "client/user_interface.h"
+#include "protocol_interpreter.h"
+#include "user_interface.h"
 
 //////
 #include <stdio.h>

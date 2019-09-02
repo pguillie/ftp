@@ -1,27 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ctrl_command.c                                     :+:      :+:    :+:   */
+/*   recv_reply.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pguillie <pguillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/08/15 08:29:39 by pguillie          #+#    #+#             */
-/*   Updated: 2019/08/15 12:08:47 by pguillie         ###   ########.fr       */
+/*   Created: 2019/07/29 05:39:05 by pguillie          #+#    #+#             */
+/*   Updated: 2019/08/15 08:33:03 by pguillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "client/protocol_interpreter.h"
+#include "protocol_interpreter.h"
 
-#include <stdio.h>//
-int ctrl_command(int control, const char *cmd, char *args)
+int recv_reply(int control, char **reply)
 {
-	char *reply;
+	int ret;
 
-	if (send_command(control, cmd, args) != 0)
-		fprintf(stderr, "ERR ctrl_command 1\n");
-	if (recv_reply(control, &reply) < 0)
-		fprintf(stderr, "ERR ctrl_command 2\n");
-	ui_reply(reply, "2");
-	free(reply);
-	return 0;
+	/* multilines reply
+	 * ...
+	 */
+	ret = read_line(control, reply);
+	(*reply)[ft_strlen(*reply) - 1] = '\0'; //tmp
+	return (ret);
 }

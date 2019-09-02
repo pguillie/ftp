@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "client/client.h"
-#include "client/protocol_interpreter.h"
+#include "client.h"
+#include "protocol_interpreter.h"
 
 static int connect_server(const char *server, const char *port)
 {
