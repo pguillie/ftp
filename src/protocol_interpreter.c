@@ -6,7 +6,7 @@
 /*   By: pguillie <pguillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/07 08:28:13 by pguillie          #+#    #+#             */
-/*   Updated: 2019/11/06 14:43:48 by pguillie         ###   ########.fr       */
+/*   Updated: 2019/11/07 16:25:55 by pguillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ int protocol_interpreter(int soc)
 		puts("Service not recognized. Closing connection.");
 		return 1;
 	}
-	ftp_syst(soc, NULL);
-	while ((ret = user_input(&line)) > 0) {
+	ftp_user(soc, NULL);
+	while ((ret = user_input(FTP_PROMPT, &line)) > 0) {
 		command = ft_strtok(line, " ");
 		arguments = ft_strtok(NULL, "");
 //		printf("%s/ /%s\n", command, arguments);

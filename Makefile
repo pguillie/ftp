@@ -6,7 +6,7 @@
 #    By: pguillie <pguillie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/22 18:46:54 by pguillie          #+#    #+#              #
-#    Updated: 2019/11/02 18:58:35 by pguillie         ###   ########.fr        #
+#    Updated: 2019/11/07 08:56:23 by pguillie         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -22,8 +22,9 @@ srcdir = ./src/
 # client
 
 headers =					\
+	client.h				\
 	protocol_interpreter.h			\
-	user_interface.h			\
+	data_transfer.h				\
 
 sources =					\
 	main.c					\
@@ -31,6 +32,7 @@ sources =					\
 	protocol_interpreter.c			\
 	user_input.c				\
 	execute.c				\
+	ftp_user.c				\
 	ftp_cwd.c				\
 	ftp_quit.c				\
 	ftp_type.c				\

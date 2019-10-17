@@ -6,7 +6,7 @@
 /*   By: pguillie <pguillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/29 08:08:24 by pguillie          #+#    #+#             */
-/*   Updated: 2019/11/02 19:06:12 by pguillie         ###   ########.fr       */
+/*   Updated: 2019/11/08 07:32:54 by pguillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ static int manage_transfer(int lsoc, transfer_function func, const char *arg)
 	return 0;
 }
 
-static void close_data_server(int *lsoc) { close(*lsoc); } //check for 'run_data_server'
+static void close_data_server(int *lsoc) { close(*lsoc); }
 
 int data_transfer(int soc, const char *cmd, char *args, transfer_function func)
 {
@@ -80,7 +80,7 @@ int data_transfer(int soc, const char *cmd, char *args, transfer_function func)
 	if (lsoc == -1 || dtp_port(soc, lsoc) == -1)
 		return -1;
 	s = ftp_command(soc, cmd, args, "1");
-	if (s != 0)
+	if (s != 1)
 		return s;
 	if (manage_transfer(lsoc, func, args) == -1)
 		return -1;

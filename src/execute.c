@@ -6,7 +6,7 @@
 /*   By: pguillie <pguillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/31 12:35:56 by pguillie          #+#    #+#             */
-/*   Updated: 2019/11/02 18:47:07 by pguillie         ###   ########.fr       */
+/*   Updated: 2019/11/07 16:25:21 by pguillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ struct {
 	const char *name;
 	int (*func)(int soc, char *arg);
 } ftp_cmd[] = {
-	//{"user", &ftp_user},
+	{"user", ftp_user},
 	{"cd", ftp_cwd},
 	{"quit", ftp_quit},
 	{"type", ftp_type},

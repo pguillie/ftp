@@ -6,7 +6,7 @@
 /*   By: pguillie <pguillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/29 05:39:05 by pguillie          #+#    #+#             */
-/*   Updated: 2019/11/02 19:02:24 by pguillie         ###   ########.fr       */
+/*   Updated: 2019/11/07 09:31:58 by pguillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@
 
 /*
 ** RETURN VALUE
-**  1 command success
-**  0 command failure
-** -1 error
+** [1-5] reply code
+**    0  socket EOF
+**   -1  error
 */
 
 int recv_reply(int soc, const char *successes)
@@ -32,11 +32,12 @@ int recv_reply(int soc, const char *successes)
 	 * ...
 	 */
 	ret = read_line(soc, &rep);
-	if (ret != 1) // (ret == 0) => `reply' was not allocated?
+	if (ret != 1) // (ret == 0) => `rep' was not allocated?
 		return ret;
-	ret = (ft_strchr(successes, *rep)) ? 0 : 1;
+	ret = *rep - '0';
 	rep[ft_strlen(rep) - 1] = '\0';
-	printf("%s (%s)\n", rep + 4, (ret == 0) ? "SUCCESS" : "ERROR");
+	printf("%s (%s)\n", rep + 4,
+		(ft_strchr(successes, *rep)) ? "SUCCESS" : "ERROR");
 	free(rep);
 	return ret;
 }

@@ -6,14 +6,14 @@
 /*   By: pguillie <pguillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/07 08:26:20 by pguillie          #+#    #+#             */
-/*   Updated: 2019/11/02 18:54:07 by pguillie         ###   ########.fr       */
+/*   Updated: 2019/11/07 16:25:42 by pguillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PROTOCOL_INTERPRETER_H
 # define PROTOCOL_INTERPRETER_H
 
-//# include "data_transfer.h"
+# define FTP_PROMPT "ftp> "
 
 int protocol_interpreter(int soc);
 
@@ -21,10 +21,13 @@ int send_command(int soc, const char *cmd, const char *args);
 int recv_reply(int soc, const char *successes);
 
 int execute(int soc, const char *cmd, char *args);
-int user_input(char **line);
+int user_input(const char *prompt, char **line);
+
+int login(int soc, char *args);
 
 int ftp_command(int soc, const char *cmd, const char *args, const char *success);
 
+int ftp_user(int soc, char *arg);
 int ftp_cwd(int soc, char *arg);
 int ftp_quit(int soc, char *arg);
 int ftp_type(int soc, char *arg);
