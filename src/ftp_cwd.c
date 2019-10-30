@@ -1,22 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   user_interface.h                                   :+:      :+:    :+:   */
+/*   ftp_cwd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pguillie <pguillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/29 05:34:46 by pguillie          #+#    #+#             */
-/*   Updated: 2019/11/02 15:19:36 by pguillie         ###   ########.fr       */
+/*   Created: 2019/11/02 17:42:40 by pguillie          #+#    #+#             */
+/*   Updated: 2019/11/02 18:22:29 by pguillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef USER_INTERFACE_H
-# define USER_INTERFACE_H
+#include "protocol_interpreter.h"
 
-# include <unistd.h>
-
-# include "../libft/include/libft.h"
-
-int ui_input(char **line);
-
-#endif /* USER_INTERFACE_H */
+int ftp_cwd(int soc, char *arg)
+{
+	return ftp_command(soc, "CWD", arg, "2");
+}

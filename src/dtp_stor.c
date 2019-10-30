@@ -1,22 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   user_interface.h                                   :+:      :+:    :+:   */
+/*   dtp_stor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pguillie <pguillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/29 05:34:46 by pguillie          #+#    #+#             */
-/*   Updated: 2019/11/02 15:19:36 by pguillie         ###   ########.fr       */
+/*   Created: 2019/11/01 10:10:26 by pguillie          #+#    #+#             */
+/*   Updated: 2019/11/02 18:57:55 by pguillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef USER_INTERFACE_H
-# define USER_INTERFACE_H
+#include <unistd.h>
+#include <fcntl.h>
 
-# include <unistd.h>
+#include "data_transfer.h"
 
-# include "../libft/include/libft.h"
+int dtp_stor(int soc, const char *arg)
+{
+	int fd, ret;
 
-int ui_input(char **line);
-
-#endif /* USER_INTERFACE_H */
+	fd = open(arg, O_RDONLY);
+	if (fd < 0)
+		return 1;
+	ret = send_data(soc, fd);
+	close(fd);
+	return ret;
+}

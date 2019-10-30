@@ -1,34 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   user_interface.c                                   :+:      :+:    :+:   */
+/*   ftp_syst.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pguillie <pguillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/07 11:50:50 by pguillie          #+#    #+#             */
-/*   Updated: 2019/11/01 07:13:54 by pguillie         ###   ########.fr       */
+/*   Created: 2019/11/02 17:49:06 by pguillie          #+#    #+#             */
+/*   Updated: 2019/11/02 18:52:23 by pguillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
+#include <stddef.h>
 
 #include "protocol_interpreter.h"
 
-int ui_input(char **line)
+int ftp_syst(int soc, char *arg __attribute__((unused)))
 {
-	write(1, "ftp> ", 5);
-	return read_line(0, line);
-}
-
-int ui_output(const char *str)
-{
-	puts(str);
-	return 0;
-}
-
-int ui_reply(const char *reply, const char *success)
-{
-	printf("%s\t%s\n", ft_strchr(success, *reply) ? "SUCCESS" : "ERROR",
-		reply + 4);
-	return 0;
+	return ftp_command(soc, "SYST", NULL, "2");
 }

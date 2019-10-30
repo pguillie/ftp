@@ -6,52 +6,57 @@
 /*   By: pguillie <pguillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/07 08:28:13 by pguillie          #+#    #+#             */
-/*   Updated: 2019/08/15 12:09:19 by pguillie         ###   ########.fr       */
+/*   Updated: 2019/11/06 14:43:48 by pguillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdlib.h>
+
 #include "protocol_interpreter.h"
-#include "user_interface.h"
+
+#include "../libft/include/libft.h"
 
 //////
 #include <stdio.h>
 
-static int server_greetings(int control)
+static int server_greetings(int soc)
 {
 	char *reply;
 
-	ui_output("Awaiting server greetings...");
-	recv_reply(control, &reply);
-	if (!strncmp(reply, "120", 3)) {
-		ui_reply(reply, "1");
+	if (read_line(soc, &reply) != 1)
+		return 0;
+	if (ft_strncmp(reply, "120", 3) == 0) {
+		printf("%s\n", reply);
 		free(reply);
-		recv_reply(control, &reply);
+		if (read_line(soc, &reply) != 1)
+			return 0;
 	}
-	if (!strncmp(reply, "220", 3)) {
-		ui_reply(reply, "2");
+	if (ft_strncmp(reply, "220", 3) == 0) {
+		printf("%s\n", reply);
 		free(reply);
-		return (1);
+		return 1;
 	}
 	free(reply);
-	ui_output("Service not recognized, closing connection.");
-	return (0);
+	return 0;
 }
 
-int protocol_interpreter(int control)
+int protocol_interpreter(int soc)
 {
 	char *line, *command, *arguments;
 	int ret;
 
-	if (!server_greetings(control))
-		return (1);
-	ctrl_command(control, "SYST", NULL);
-	while ((ret = ui_input(&line)) > 0) {
+	if (!server_greetings(soc)) {
+		puts("Service not recognized. Closing connection.");
+		return 1;
+	}
+	ftp_syst(soc, NULL);
+	while ((ret = user_input(&line)) > 0) {
 		command = ft_strtok(line, " ");
-		arguments = ft_strtok(NULL, "\0");
+		arguments = ft_strtok(NULL, "");
 //		printf("%s/ /%s\n", command, arguments);
-		if (command && execute(control, command, arguments) < 0)
-			fprintf(stderr, "PI\n");//die();
+		if (command && execute(soc, command, arguments) < 0)
+			fprintf(stderr, "PI error\n");//die();
 		free(line);
 	}
-	return (ret < 0 ? 1 : 0);
+	return (ret < 0) ? 1 : 0;
 }

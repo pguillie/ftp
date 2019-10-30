@@ -6,9 +6,12 @@
 /*   By: pguillie <pguillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/03 10:22:52 by pguillie          #+#    #+#             */
-/*   Updated: 2019/08/15 08:32:03 by pguillie         ###   ########.fr       */
+/*   Updated: 2019/11/02 18:55:04 by pguillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include <sys/socket.h>
+#include <stddef.h>
 
 #include "protocol_interpreter.h"
 

@@ -6,9 +6,11 @@
 /*   By: pguillie <pguillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/07 08:15:04 by pguillie          #+#    #+#             */
-/*   Updated: 2019/07/31 12:26:40 by pguillie         ###   ########.fr       */
+/*   Updated: 2019/11/02 18:30:17 by pguillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include <unistd.h>
 
 #include "client.h"
 #include "protocol_interpreter.h"
@@ -44,7 +46,6 @@ int client(const char *server, const char *port)
 		printf("Unable to connect.\n");
 		return (-1);
 	}
-	printf("Connected!\n");
 	ret = protocol_interpreter(sock);
 	close(sock);
 	return (ret);

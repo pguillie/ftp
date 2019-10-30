@@ -1,22 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   user_interface.h                                   :+:      :+:    :+:   */
+/*   dtp_list.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pguillie <pguillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/29 05:34:46 by pguillie          #+#    #+#             */
-/*   Updated: 2019/11/02 15:19:36 by pguillie         ###   ########.fr       */
+/*   Created: 2019/11/01 08:51:36 by pguillie          #+#    #+#             */
+/*   Updated: 2019/11/02 18:20:20 by pguillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef USER_INTERFACE_H
-# define USER_INTERFACE_H
+#include "data_transfer.h"
 
-# include <unistd.h>
-
-# include "../libft/include/libft.h"
-
-int ui_input(char **line);
-
-#endif /* USER_INTERFACE_H */
+int dtp_list(int soc, const char *arg __attribute__((unused)))
+{
+	return recv_data(soc, 1);
+}

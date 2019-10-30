@@ -6,13 +6,13 @@
 #    By: pguillie <pguillie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/22 18:46:54 by pguillie          #+#    #+#              #
-#    Updated: 2019/09/03 09:35:04 by pguillie         ###   ########.fr        #
+#    Updated: 2019/11/02 18:58:35 by pguillie         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
 NAME	= ftp
 CC	= gcc
-CFLAGS	= -Wall -Werror -Wextra -I$(incdir)
+CFLAGS	= -Wall -Werror -Wextra -I$(incdir) $(DEBUG)
 
 LIBFT	= libft/libft.a
 
@@ -29,11 +29,26 @@ sources =					\
 	main.c					\
 	client.c				\
 	protocol_interpreter.c			\
-	user_interface.c			\
+	user_input.c				\
 	execute.c				\
-	ctrl_command.c				\
+	ftp_cwd.c				\
+	ftp_quit.c				\
+	ftp_type.c				\
+	ftp_retr.c				\
+	ftp_stor.c				\
+	ftp_pwd.c				\
+	ftp_list.c				\
+	ftp_syst.c				\
+	data_transfer.c				\
+	dtp_port.c				\
+	dtp_retr.c				\
+	dtp_stor.c				\
+	dtp_list.c				\
+	ftp_command.c				\
 	send_command.c				\
 	recv_reply.c				\
+	send_data.c				\
+	recv_data.c				\
 
 objects = $(addprefix $(srcdir), $(sources:%.c=%.o))
 
@@ -44,12 +59,15 @@ objects = $(addprefix $(srcdir), $(sources:%.c=%.o))
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(objects)
-	$(CC) -o $@ $^ -L$(dir $(LIBFT)) -lft
+	$(CC) -o $@ $^ -L$(dir $(LIBFT)) -lft $(DEBUG)
 
 $(objects): $(addprefix $(incdir), $(headers))
 
 $(LIBFT):
 	make -C $(dir $(LIBFT))
+
+debug:
+	make re DEBUG='-fsanitize=address'
 
 clean:
 	make -C $(dir $(LIBFT)) fclean

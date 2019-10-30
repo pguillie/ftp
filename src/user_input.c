@@ -1,22 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   user_interface.h                                   :+:      :+:    :+:   */
+/*   user_input.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pguillie <pguillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/29 05:34:46 by pguillie          #+#    #+#             */
-/*   Updated: 2019/11/02 15:19:36 by pguillie         ###   ########.fr       */
+/*   Created: 2019/07/07 11:50:50 by pguillie          #+#    #+#             */
+/*   Updated: 2019/11/06 16:26:23 by pguillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef USER_INTERFACE_H
-# define USER_INTERFACE_H
+#include <unistd.h>
 
-# include <unistd.h>
+#include "../libft/include/libft.h"
 
-# include "../libft/include/libft.h"
-
-int ui_input(char **line);
-
-#endif /* USER_INTERFACE_H */
+int user_input(char **line)
+{
+	write(1, "ftp> ", 5);
+	return read_line(0, line);
+}

@@ -1,24 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   user_name.c                                        :+:      :+:    :+:   */
+/*   ftp_retr.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pguillie <pguillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/08/04 10:45:40 by pguillie          #+#    #+#             */
-/*   Updated: 2019/08/04 10:47:03 by pguillie         ###   ########.fr       */
+/*   Created: 2019/11/02 18:01:42 by pguillie          #+#    #+#             */
+/*   Updated: 2019/11/02 18:50:57 by pguillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "protocol_interpreter.h"
+#include "data_transfer.h"
 
-int user_name(int control, char *args)
+int ftp_retr(int soc, char *args)
 {
-	char *reply;
-
-	send_command(control, "USER", args);
-	recv_reply(control, &reply);
-	ui_reply(reply);
-	free(reply);
-	return (0);
+	return data_transfer(soc, "RETR", args, &dtp_retr);
 }
