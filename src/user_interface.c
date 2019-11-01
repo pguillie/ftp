@@ -6,7 +6,7 @@
 /*   By: pguillie <pguillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/07 11:50:50 by pguillie          #+#    #+#             */
-/*   Updated: 2019/08/15 12:06:28 by pguillie         ###   ########.fr       */
+/*   Updated: 2019/11/01 07:13:54 by pguillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int ui_output(const char *str)
 
 int ui_reply(const char *reply, const char *success)
 {
-	printf("%s (%s)\n", reply,
-		ft_strchr(success, *reply) ? "SUCCESS" : "ERROR");
+	printf("%s\t%s\n", ft_strchr(success, *reply) ? "SUCCESS" : "ERROR",
+		reply + 4);
 	return 0;
 }
