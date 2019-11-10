@@ -6,7 +6,7 @@
 #    By: pguillie <pguillie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/22 18:46:54 by pguillie          #+#    #+#              #
-#    Updated: 2019/11/07 08:56:23 by pguillie         ###   ########.fr        #
+#    Updated: 2019/11/26 19:56:43 by pguillie         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -42,7 +42,9 @@ sources =					\
 	ftp_list.c				\
 	ftp_syst.c				\
 	data_transfer.c				\
+	run_data_server.c			\
 	dtp_port.c				\
+	dtp_eprt.c				\
 	dtp_retr.c				\
 	dtp_stor.c				\
 	dtp_list.c				\

@@ -1,57 +1,61 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   client.c                                           :+:      :+:    :+:   */
+/*   run_data_server.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pguillie <pguillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/07 08:15:04 by pguillie          #+#    #+#             */
-/*   Updated: 2019/11/10 18:10:13 by pguillie         ###   ########.fr       */
+/*   Created: 2019/11/26 19:37:26 by pguillie          #+#    #+#             */
+/*   Updated: 2019/11/26 20:20:22 by pguillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <sys/socket.h>
 #include <netdb.h>
 #include <unistd.h>
-#include <stdio.h>
 
-#include "client.h"
-#include "protocol_interpreter.h"
+#include "data_transfer.h"
 #include "../libft/include/libft.h"
 
 static int use_addr(struct addrinfo addr)
 {
 	int s;
 
-	s = socket(addr.ai_family, addr.ai_socktype, addr.ai_protocol);
-	if (s == -1)
-		return -1;
-	if (connect(s, addr.ai_addr, addr.ai_addrlen) == -1) {
-		close(s);
-		return -1;
-	}
-	return s;
+	do {
+		s = socket(addr.ai_family, addr.ai_socktype, addr.ai_protocol);
+		if (s == -1)
+			break;
+		if (bind(s, addr.ai_addr, addr.ai_addrlen))
+			break;
+		if (listen(s, 1) < 0)
+			break;
+		if (addr.ai_family == AF_INET6)
+			s |= INET6_BIT;
+		return s;
+	} while (0);
+	close(s);
+	return -1;
 }
 
-static int connect_socket(struct addrinfo *rp)
+static int find_interface(struct addrinfo *rp)
 {
-	int sfd;
+	int sfd = -1;
 
 	if (rp == NULL)
 		return -1;
 	if (rp->ai_family == AF_INET6) {
 		sfd = use_addr(*rp);
 		if (sfd == -1)
-			return connect_socket(rp->ai_next);
+			return find_interface(rp->ai_next);
 	} else {
-		sfd = connect_socket(rp->ai_next);
+		sfd = find_interface(rp->ai_next);
 		if (sfd == -1)
 			return use_addr(*rp);
 	}
 	return sfd;
 }
 
-static int connect_service(const char *node, const char *service)
+int run_data_server(void)
 {
 	struct addrinfo hints, *result;
 	int sfd;
@@ -60,31 +64,10 @@ static int connect_service(const char *node, const char *service)
 	hints.ai_family = AF_UNSPEC;
 	hints.ai_socktype = SOCK_STREAM;
 	hints.ai_protocol = 0;
-	hints.ai_flags = AI_NUMERICSERV;
-	if (!service)
-		service = "21";
-	printf(ft_strchr(node, ':')
-		? "Connecting to [%s]:%s...\n"
-		: "Connecting to %s:%s...\n",
-		node, service);
-	if (getaddrinfo(node, service, &hints, &result) != 0)
+	hints.ai_flags = AI_PASSIVE | AI_NUMERICSERV;
+	if (getaddrinfo(NULL, "0", &hints, &result) != 0)
 		return -1;
-	sfd = connect_socket(result);
+	sfd = find_interface(result);
 	freeaddrinfo(result);
 	return sfd;
-}
-
-int client(const char *host, const char *port)
-{
-	int soc;
-	int ret;
-
-	soc = connect_service(host, port);
-	if (soc < 0) {
-		printf("Unable to connect.\n");
-		return (-1);
-	}
-	ret = protocol_interpreter(soc);
-	close(soc);
-	return (ret);
 }
