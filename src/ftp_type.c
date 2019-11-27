@@ -6,7 +6,7 @@
 /*   By: pguillie <pguillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/01 11:34:47 by pguillie          #+#    #+#             */
-/*   Updated: 2019/11/02 18:50:01 by pguillie         ###   ########.fr       */
+/*   Updated: 2019/11/28 14:53:50 by pguillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int ftp_type(int soc, char *args)
 		return 1;
 	}
 	ret = ftp_command(soc, "TYPE", code, "2");
-	if (ret == 0)
+	if (ret == 2)
 		data_type = (*code == 'A') ? TYPE_ASCII : TYPE_IMAGE;
 	return ret;
 }

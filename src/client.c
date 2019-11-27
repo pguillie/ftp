@@ -6,11 +6,12 @@
 /*   By: pguillie <pguillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/07 08:15:04 by pguillie          #+#    #+#             */
-/*   Updated: 2019/11/10 18:10:13 by pguillie         ###   ########.fr       */
+/*   Updated: 2019/11/28 14:47:34 by pguillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <sys/socket.h>
+#include <signal.h>
 #include <netdb.h>
 #include <unistd.h>
 #include <stdio.h>
@@ -79,6 +80,10 @@ int client(const char *host, const char *port)
 	int soc;
 	int ret;
 
+	if (signal(SIGPIPE, SIG_IGN) == SIG_ERR) {
+		printf("Error: failed to manage signals\n");
+		return -1;
+	}
 	soc = connect_service(host, port);
 	if (soc < 0) {
 		printf("Unable to connect.\n");

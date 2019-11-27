@@ -6,7 +6,7 @@
 /*   By: pguillie <pguillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/01 09:19:42 by pguillie          #+#    #+#             */
-/*   Updated: 2019/11/01 12:06:12 by pguillie         ###   ########.fr       */
+/*   Updated: 2019/11/27 07:27:52 by pguillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,30 +17,38 @@
 
 enum ftp_data_type data_type;
 
+#define BUFSIZE (1024)
+
+static int flush_buf(char *buf, int fd, size_t *i)
+{
+	if (buf[*i - 1] == '\r') {
+		if (write(fd, buf, *i - 1) < 0)
+			return -1;
+		buf[0] = '\r';
+		*i = 1;
+	} else {
+		if (write(fd, buf, *i) < 0)
+			return -1;
+		*i = 0;
+	}
+	return 0;
+}
+
 static int recv_data_asc(int soc, int fd)
 {
-	char buf[1024], data[1024];
+	char buf[BUFSIZE], data[BUFSIZE];
 	ssize_t n;
 	size_t i, j;
-	int cr;
 
-	cr = 0;
 	i = 0;
-	while ((n = recv(soc, data, sizeof(data), MSG_NOSIGNAL)) > 0) {
+	while ((n = recv(soc, data, sizeof(data), 0)) > 0) {
 		j = 0;
 		while (j < (size_t)n) {
-			buf[(cr && data[j] != '\n' ? ++i : i)] = data[j];
-			if (data[j++] == '\r') {
-				cr = 1;
-			} else {
-				i++;
-				cr = 0;
-			}
-			if (i == sizeof(buf)) {
-				if (write(fd, buf, i) < 0)
-					return -1;
-				i = 0;
-			}
+			if (data[j] == '\n' && i && buf[i - 1] == '\r')
+				i -= 1;
+			buf[i++] = data[j++];
+			if (i == sizeof(buf) && flush_buf(buf, fd, &i) != 0)
+				return -1;
 		}
 	}
 	if (n < 0 || (i && write(fd, buf, i) < 0))
@@ -50,10 +58,10 @@ static int recv_data_asc(int soc, int fd)
 
 static int recv_data_bin(int soc, int fd)
 {
-	char buf[1024];
+	char buf[BUFSIZE];
 	ssize_t n;
 
-	while ((n = recv(soc, buf, sizeof(buf), MSG_NOSIGNAL)) > 0) {
+	while ((n = recv(soc, buf, sizeof(buf), 0)) > 0) {
 		if (write(fd, buf, n) < 0)
 			return -1;
 	}

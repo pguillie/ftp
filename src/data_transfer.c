@@ -6,7 +6,7 @@
 /*   By: pguillie <pguillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/29 08:08:24 by pguillie          #+#    #+#             */
-/*   Updated: 2019/11/26 20:19:25 by pguillie         ###   ########.fr       */
+/*   Updated: 2019/11/28 16:30:40 by pguillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,10 @@ static int manage_transfer(int lsoc, transfer_function func, const char *arg)
 	else if (child == 0) {
 		len = sizeof(struct sockaddr_in);
 		csoc = accept(lsoc, (struct sockaddr *)&peer, &len);
-		if (csoc < 0 || func(csoc, arg) != 0)
+		if (csoc < 0)
 			exit(EXIT_FAILURE);
+		if (func(csoc, arg) != 0)
+			puts("Error while transfering data.");
 		exit(EXIT_SUCCESS);
 	} else {
 		wait4(child, &status, 0, NULL);
