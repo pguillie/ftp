@@ -6,7 +6,7 @@
 /*   By: pguillie <pguillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/07 08:15:04 by pguillie          #+#    #+#             */
-/*   Updated: 2019/11/28 14:47:34 by pguillie         ###   ########.fr       */
+/*   Updated: 2019/11/28 15:56:03 by pguillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,9 +87,9 @@ int client(const char *host, const char *port)
 	soc = connect_service(host, port);
 	if (soc < 0) {
 		printf("Unable to connect.\n");
-		return (-1);
+		return -1;
 	}
 	ret = protocol_interpreter(soc);
 	close(soc);
-	return (ret);
+	return ret;
 }

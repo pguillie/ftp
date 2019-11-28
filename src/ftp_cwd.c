@@ -6,7 +6,7 @@
 /*   By: pguillie <pguillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/02 17:42:40 by pguillie          #+#    #+#             */
-/*   Updated: 2019/11/02 18:22:29 by pguillie         ###   ########.fr       */
+/*   Updated: 2019/11/28 13:57:45 by pguillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,5 @@
 
 int ftp_cwd(int soc, char *arg)
 {
-	return ftp_command(soc, "CWD", arg, "2");
+	return ftp_command(soc, "CWD", arg);
 }

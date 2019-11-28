@@ -6,7 +6,7 @@
 /*   By: pguillie <pguillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 13:16:42 by pguillie          #+#    #+#             */
-/*   Updated: 2019/11/13 16:01:12 by pguillie         ###   ########.fr       */
+/*   Updated: 2019/11/28 14:00:31 by pguillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,5 +67,5 @@ int dtp_eprt(int csoc, int lsoc)
 	i += ft_strlen(buf + i);
 	buf[i++] = '|';
 	buf[i] = '\0';
-	return ftp_command(csoc, "EPRT", buf, "2");
+	return ftp_command(csoc, "EPRT", buf);
 }

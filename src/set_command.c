@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execute.c                                          :+:      :+:    :+:   */
+/*   set_command.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pguillie <pguillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/31 12:35:56 by pguillie          #+#    #+#             */
-/*   Updated: 2019/11/07 16:25:21 by pguillie         ###   ########.fr       */
+/*   Updated: 2019/11/28 10:53:46 by pguillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@
 
 struct {
 	const char *name;
-	int (*func)(int soc, char *arg);
-} ftp_cmd[] = {
+	ftp_cmd fptr;
+} command[] = {
 	{"user", ftp_user},
 	{"cd", ftp_cwd},
 	{"quit", ftp_quit},
@@ -30,14 +30,19 @@ struct {
 	{"syst", ftp_syst}
 };
 
-int execute(int soc, const char *cmd, char *args)
+int set_command(char *cmd_line, ftp_cmd *cmd, char **args)
 {
+	char *c;
 	size_t i;
 
-	i = sizeof(ftp_cmd) / sizeof(ftp_cmd[0]);
-	while (i--)
-		if (ft_strcmp(ftp_cmd[i].name, cmd) == 0)
-			return ftp_cmd[i].func(soc, args);
-	puts("Invalid command.");
+	c = ft_strtok(cmd_line, " ");
+	i = sizeof(command) / sizeof(command[0]);
+	while (i--) {
+		if (ft_strcmp(command[i].name, c) == 0) {
+			*cmd = command[i].fptr;
+			*args = ft_strtok(NULL, "\0");
+			return 0;
+		}
+	}
 	return 1;
 }

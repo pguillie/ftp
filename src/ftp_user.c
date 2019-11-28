@@ -6,7 +6,7 @@
 /*   By: pguillie <pguillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/17 09:02:05 by pguillie          #+#    #+#             */
-/*   Updated: 2019/11/08 07:37:05 by pguillie         ###   ########.fr       */
+/*   Updated: 2019/11/28 13:57:14 by pguillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static int ftp_pass(int soc, char *pass, char *rep)
 		input = NULL;
 	}
 	free(rep);
-	ret = ftp_command(soc, "PASS", pass, "2");
+	ret = ftp_command(soc, "PASS", pass);
 	if (input)
 		free(input);
 	return ret;

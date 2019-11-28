@@ -6,7 +6,7 @@
 /*   By: pguillie <pguillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/31 15:42:13 by pguillie          #+#    #+#             */
-/*   Updated: 2019/11/02 18:58:58 by pguillie         ###   ########.fr       */
+/*   Updated: 2019/11/28 14:00:20 by pguillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,5 +82,5 @@ int dtp_port(int csoc, int lsoc)
 		return -1;
 	set_host(buf, inet_ntoa(addr.sin_addr));
 	set_port(buf, ntohs(addr.sin_port));
-	return ftp_command(csoc, "PORT", buf, "2");
+	return ftp_command(csoc, "PORT", buf);
 }

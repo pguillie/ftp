@@ -6,15 +6,13 @@
 /*   By: pguillie <pguillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/29 08:08:24 by pguillie          #+#    #+#             */
-/*   Updated: 2019/11/28 16:30:40 by pguillie         ###   ########.fr       */
+/*   Updated: 2019/11/28 16:35:44 by pguillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <arpa/inet.h>
 #include <sys/types.h>
-//#include <sys/socket.h>
 #include <sys/wait.h>
-//#include <netdb.h>
 #include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -87,10 +85,10 @@ int data_transfer(int soc, const char *cmd, char *args, transfer_function func)
 	ret = send_port(soc, lsoc, inet);
 	if (ret != 0)
 		return ret;
-	s = ftp_command(soc, cmd, args, "1");
+	s = ftp_command(soc, cmd, args);
 	if (s != 1)
 		return s;
 	if (manage_transfer(lsoc, func, args) == -1)
 		return -1;
-	return recv_reply(soc, "2");
+	return recv_reply(soc);
 }

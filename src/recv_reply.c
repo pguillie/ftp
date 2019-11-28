@@ -6,7 +6,7 @@
 /*   By: pguillie <pguillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/29 05:39:05 by pguillie          #+#    #+#             */
-/*   Updated: 2019/11/07 09:31:58 by pguillie         ###   ########.fr       */
+/*   Updated: 2019/11/28 13:55:49 by pguillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,21 +23,17 @@
 **   -1  error
 */
 
-int recv_reply(int soc, const char *successes)
+int recv_reply(int soc)
 {
 	char *rep;
 	int ret;
 
-	/* multilines reply
-	 * ...
-	 */
 	ret = read_line(soc, &rep);
-	if (ret != 1) // (ret == 0) => `rep' was not allocated?
+	if (ret != 1)
 		return ret;
 	ret = *rep - '0';
 	rep[ft_strlen(rep) - 1] = '\0';
-	printf("%s (%s)\n", rep + 4,
-		(ft_strchr(successes, *rep)) ? "SUCCESS" : "ERROR");
+	puts(rep);
 	free(rep);
 	return ret;
 }

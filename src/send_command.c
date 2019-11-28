@@ -6,7 +6,7 @@
 /*   By: pguillie <pguillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/03 10:22:52 by pguillie          #+#    #+#             */
-/*   Updated: 2019/11/02 18:55:04 by pguillie         ###   ########.fr       */
+/*   Updated: 2019/11/28 13:42:04 by pguillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,15 @@
 
 struct sbuf {
 	char buf[512];
-	size_t i;
+	size_t index;
 	int fd;
 };
 
 static int sbuf_out(struct sbuf *sb)
 {
-	if (send(sb->fd, sb->buf, sb->i, 0) < 0)
+	if (send(sb->fd, sb->buf, sb->index, 0) < 0)
 		return 1;
-	sb->i = 0;
+	sb->index = 0;
 	return 0;
 }
 
@@ -35,19 +35,19 @@ static int sbuf_in(struct sbuf *sb, const char *str)
 
 	i = 0;
 	while (str[i]) {
-		if (sb->i == sizeof(sb->buf) && sbuf_out(sb) != 0)
+		if (sb->index == sizeof(sb->buf) && sbuf_out(sb) != 0)
 			return 1;
-		sb->buf[sb->i++] = str[i++];
+		sb->buf[sb->index++] = str[i++];
 	}
 	return 0;
 }
 
-int send_command(int control_sock, const char *cmd, const char *args)
+int send_command(int soc, const char *cmd, const char *args)
 {
 	struct sbuf sb;
 
-	sb.i = 0;
-	sb.fd = control_sock;
+	sb.index = 0;
+	sb.fd = soc;
 	if (sbuf_in(&sb, cmd) != 0)
 		return 1;
 	if (args != NULL)

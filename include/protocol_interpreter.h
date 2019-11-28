@@ -6,7 +6,7 @@
 /*   By: pguillie <pguillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/07 08:26:20 by pguillie          #+#    #+#             */
-/*   Updated: 2019/11/07 16:25:42 by pguillie         ###   ########.fr       */
+/*   Updated: 2019/11/28 13:56:59 by pguillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,19 @@
 
 # define FTP_PROMPT "ftp> "
 
+typedef int (*ftp_cmd)(int soc, char *arg);
+
 int protocol_interpreter(int soc);
 
-int send_command(int soc, const char *cmd, const char *args);
-int recv_reply(int soc, const char *successes);
-
-int execute(int soc, const char *cmd, char *args);
 int user_input(const char *prompt, char **line);
+int set_command(char *cmd_line, ftp_cmd *cmd, char **args);
+
+int send_command(int soc, const char *cmd, const char *args);
+int recv_reply(int soc);
 
 int login(int soc, char *args);
 
-int ftp_command(int soc, const char *cmd, const char *args, const char *success);
+int ftp_command(int soc, const char *cmd, const char *args);
 
 int ftp_user(int soc, char *arg);
 int ftp_cwd(int soc, char *arg);

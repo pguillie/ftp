@@ -6,7 +6,7 @@
 /*   By: pguillie <pguillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/07 07:57:28 by pguillie          #+#    #+#             */
-/*   Updated: 2019/11/10 17:25:36 by pguillie         ###   ########.fr       */
+/*   Updated: 2019/11/28 09:05:27 by pguillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,5 +20,5 @@ int main(int argc, char *argv[])
 		fprintf(stderr, "Usage: %s <hostname> [port]\n", argv[0]);
 		return 1;
 	}
-	return (client(argv[1], argv[2]));
+	return client(argv[1], argv[2]);
 }

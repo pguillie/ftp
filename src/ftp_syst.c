@@ -6,7 +6,7 @@
 /*   By: pguillie <pguillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/02 17:49:06 by pguillie          #+#    #+#             */
-/*   Updated: 2019/11/02 18:52:23 by pguillie         ###   ########.fr       */
+/*   Updated: 2019/11/28 13:59:20 by pguillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,5 +16,5 @@
 
 int ftp_syst(int soc, char *arg __attribute__((unused)))
 {
-	return ftp_command(soc, "SYST", NULL, "2");
+	return ftp_command(soc, "SYST", NULL);
 }

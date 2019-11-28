@@ -6,7 +6,7 @@
 #    By: pguillie <pguillie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/22 18:46:54 by pguillie          #+#    #+#              #
-#    Updated: 2019/11/26 19:56:43 by pguillie         ###   ########.fr        #
+#    Updated: 2019/11/28 10:39:15 by pguillie         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -31,7 +31,7 @@ sources =					\
 	client.c				\
 	protocol_interpreter.c			\
 	user_input.c				\
-	execute.c				\
+	set_command.c				\
 	ftp_user.c				\
 	ftp_cwd.c				\
 	ftp_quit.c				\

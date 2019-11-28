@@ -6,7 +6,7 @@
 /*   By: pguillie <pguillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/02 17:44:01 by pguillie          #+#    #+#             */
-/*   Updated: 2019/11/02 18:51:55 by pguillie         ###   ########.fr       */
+/*   Updated: 2019/11/28 13:57:55 by pguillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,5 +16,5 @@
 
 int ftp_pwd(int soc, char *arg __attribute__((unused)))
 {
-	return ftp_command(soc, "PWD", NULL, "2");
+	return ftp_command(soc, "PWD", NULL);
 }
