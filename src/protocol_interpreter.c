@@ -6,7 +6,7 @@
 /*   By: pguillie <pguillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/07 08:28:13 by pguillie          #+#    #+#             */
-/*   Updated: 2019/11/28 16:00:20 by pguillie         ###   ########.fr       */
+/*   Updated: 2019/11/28 17:19:42 by pguillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,10 @@ int protocol_interpreter(int soc)
 	}
 	ftp_user(soc, NULL);
 	while ((ret = user_input(FTP_PROMPT, &line)) > 0) {
+		if (*line == '\0') {
+			free(line);
+			continue;
+		}
 		if (set_command(line, &command, &arguments) != 0)
 			puts("Invalid command.");
 		else if (command(soc, arguments) < 0)

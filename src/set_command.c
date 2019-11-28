@@ -6,7 +6,7 @@
 /*   By: pguillie <pguillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/31 12:35:56 by pguillie          #+#    #+#             */
-/*   Updated: 2019/11/28 10:53:46 by pguillie         ###   ########.fr       */
+/*   Updated: 2019/11/28 17:14:38 by pguillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ int set_command(char *cmd_line, ftp_cmd *cmd, char **args)
 	size_t i;
 
 	c = ft_strtok(cmd_line, " ");
+	if (c == NULL)
+		return 1;
 	i = sizeof(command) / sizeof(command[0]);
 	while (i--) {
 		if (ft_strcmp(command[i].name, c) == 0) {
