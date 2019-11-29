@@ -6,14 +6,12 @@
 /*   By: pguillie <pguillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/01 09:06:16 by pguillie          #+#    #+#             */
-/*   Updated: 2019/11/26 20:19:40 by pguillie         ###   ########.fr       */
+/*   Updated: 2019/11/29 18:32:40 by pguillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef DATA_TRANSFER_H
 # define DATA_TRANSFER_H
-
-# define INET6_BIT (1 << 31)
 
 typedef int (*transfer_function)(int soc, const char *arg);
 

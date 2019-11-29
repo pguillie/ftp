@@ -6,7 +6,7 @@
 /*   By: pguillie <pguillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 19:37:26 by pguillie          #+#    #+#             */
-/*   Updated: 2019/11/26 20:20:22 by pguillie         ###   ########.fr       */
+/*   Updated: 2019/11/29 18:32:23 by pguillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,6 @@ static int use_addr(struct addrinfo addr)
 			break;
 		if (listen(s, 1) < 0)
 			break;
-		if (addr.ai_family == AF_INET6)
-			s |= INET6_BIT;
 		return s;
 	} while (0);
 	close(s);

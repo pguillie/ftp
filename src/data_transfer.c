@@ -6,7 +6,7 @@
 /*   By: pguillie <pguillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/29 08:08:24 by pguillie          #+#    #+#             */
-/*   Updated: 2019/11/28 16:35:44 by pguillie         ###   ########.fr       */
+/*   Updated: 2019/11/29 18:33:08 by pguillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,16 @@ static void close_data_server(int *lsoc)
 	close(*lsoc);
 }
 
-static int send_port(int csoc, int lsoc, int inet)
+static int send_port(int csoc, int lsoc)
 {
+	struct sockaddr addr;
+	socklen_t len;
 	int ret;
 
-	if (inet == AF_INET6) {
+	len = sizeof(struct sockaddr);
+	if (getsockname(csoc, &addr, &len) == -1)
+		return -1;
+	if (addr.sa_family == AF_INET6) {
 		ret = dtp_eprt(csoc, lsoc);
 		if (ret <= 0)
 			return -1;
@@ -75,14 +80,12 @@ static int manage_transfer(int lsoc, transfer_function func, const char *arg)
 int data_transfer(int soc, const char *cmd, char *args, transfer_function func)
 {
 	int lsoc __attribute__((cleanup(close_data_server)));
-	int s, ret, inet;
+	int s, ret;
 
 	lsoc = run_data_server();
 	if (lsoc == -1)
 		return -1;
-	inet = (lsoc & INET6_BIT) ? AF_INET6 : AF_INET;
-	lsoc &= ~INET6_BIT;
-	ret = send_port(soc, lsoc, inet);
+	ret = send_port(soc, lsoc);
 	if (ret != 0)
 		return ret;
 	s = ftp_command(soc, cmd, args);
